@@ -10,6 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+LOGIN_URL = 'accounts:signin'
+LOGIN_REDIRECT_URL = 'home:home'
+LOGOUT_URL = 'account:logout'
+LOGOUT_REDIRECT_URL = LOGIN_URL
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -132,3 +137,4 @@ MEDIA_ROOT = BASE_DIR/'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend'] 
