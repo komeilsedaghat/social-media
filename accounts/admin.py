@@ -8,6 +8,7 @@ User = get_user_model()
 UserAdmin.fieldsets[1][1]['fields'] = (
                         'first_name',
                         'last_name',
+                        'profile_img',
                         'email',
                         'phone_number',
 )

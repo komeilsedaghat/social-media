@@ -1,0 +1,139 @@
+{% extends '_base.html' %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data" >
+  {% csrf_token %}
+<div class="col-md-12">
+
+
+    <div class="card card-danger">
+        
+      <div class="card-header">
+        <h3 class="card-title">Personal Information</h3>
+      </div>
+      <div class="card-body">
+        <!-- Date dd/mm/yyyy -->
+        <div class="bootstrap-timepicker">
+            <div class="form-group">
+              <label>Username:</label>
+  
+              <div class="input-group date" id="timepicker" data-target-input="nearest">
+                  <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
+                      <div class="input-group-text"><i class="far fa-user"></i></div>
+                  </div>
+              {{form.username}}
+                </div>
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+          </div>
+
+
+          <div class="form-group">
+            <label for="exampleInputFile">Profile Photo</label>
+            <div class="input-group">
+                <div class="input-group-append">
+                  <span class="input-group-text">Upload</span>
+                </div>
+                <div class="custom-file">
+                {{form.profile_img}}
+                <label class="custom-file-label" for="exampleInputFile"></label>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="form-group">
+          <label>Email:</label>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+            </div>
+            {{form.email}}
+          </div>
+          <!-- /.input group -->
+        </div>
+        <!-- /.form group -->
+
+        <!-- Date mm/dd/yyyy -->
+        <!-- /.form group -->
+
+        <!-- phone mask -->
+        <div class="form-group">
+          <label>Phone Number:</label>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+            </div>
+           {{form.phone_number}}
+          </div>
+          <!-- /.input group -->
+        </div>
+        <!-- /.form group -->
+
+        <!-- phone mask -->
+        <div class="form-group">
+          <label>age:</label>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+            </div>
+           {{form.age}}
+          </div>
+          <!-- /.input group -->
+        </div>
+        <!-- /.form group -->
+
+        <!-- /.form group -->
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+    <div class="card card-info">
+      <div class="card-header">
+        <h3 class="card-title">Main &amp; Informaition</h3>
+      </div>
+      <div class="card-body">
+        <!-- Color Picker -->
+        <div class="form-group">
+          <label>First Name:</label>
+            {{form.first_name}}
+        </div>
+        <!-- /.form group -->
+
+        <!-- Color Picker -->
+        <div class="form-group">
+          <label>Last Name:</label>
+
+          <div class="input-group my-colorpicker2 colorpicker-element" data-colorpicker-id="2">
+            {{form.last_name}}
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fas fa-square"></i></span>
+            </div>
+          </div>
+          <!-- /.input group -->
+        </div>
+        <!-- /.form group -->
+
+        <!-- time Picker -->
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+  </div>
+
+  <div>
+      <span >
+          <input type="submit" value="Save" class="btn btn-success btn-block">
+      </span>
+  </div>
+</form>
+  {% endblock %}

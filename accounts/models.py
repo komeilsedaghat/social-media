@@ -10,3 +10,4 @@ class User(AbstractUser):
     message="Phone number must be entered in the format: '+999999999'. Up to 11 digits allowed.")
     phone_number = models.CharField(max_length=11,validators=[regex],unique=True)
     age = models.PositiveSmallIntegerField(null=True,blank=True)
+    profile_img = models.ImageField(upload_to='users/pics/',blank=True)

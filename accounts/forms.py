@@ -52,3 +52,18 @@ class SignupUserForm(UserCreationForm):
 
         
 
+
+class ProfileUserForm(forms.ModelForm):
+    class Meta:
+        model = User 
+        fields = ('username','email','profile_img','phone_number','age','first_name','last_name',)
+
+    def __init__(self,*args,**kwargs):
+        super(ProfileUserForm,self).__init__(*args,**kwargs)
+        self.fields['username'].widget.attrs = {'class':'form-control', 'placeholder': 'Your Username'}
+        self.fields['email'].widget.attrs= {'class':'form-control', 'placeholder': 'Your  Email' }
+        self.fields['profile_img'].widget.attrs= {'class':'custom-file-input', 'placeholder': 'Your  profile photo','id':'exampleInputFile' }
+        self.fields['phone_number'].widget.attrs= {'class':'form-control', 'placeholder': 'Your Phone Number' }
+        self.fields['age'].widget.attrs= {'class':'form-control', 'placeholder': 'Your age' }
+        self.fields['first_name'].widget.attrs= {'class':'form-control', 'placeholder': 'Your first name' }
+        self.fields['last_name'].widget.attrs= {'class':'form-control', 'placeholder': 'Your last name' }
