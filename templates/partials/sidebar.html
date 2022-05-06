@@ -30,13 +30,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{% url 'home:add-post' %}" class="nav-link active">
+                <a href="{% url 'home:add-post' %}" class="nav-link {% if request.resolver_match.url_name == 'add-post' %}active{% endif %} ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Post</p>
+                  
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'accounts:profile' request.user %}" class="nav-link">
+                <a href="{% url 'accounts:profile' request.user %}" class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Profile</p>
                 </a>
@@ -44,7 +45,7 @@
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard v3</p>
+                  <p></p>
                 </a>
               </li>
             </ul>

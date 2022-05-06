@@ -1,11 +1,17 @@
+from builtins import print
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from .models import PostModel,CategoryModel
 from django.views import generic
 from .forms import AddPostForm
+from django.contrib.auth import get_user_model
+from .mixins import AuthorAccessMixin
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
+
+User = get_user_model()
 
 
 class HomeView(LoginRequiredMixin,View):
@@ -44,4 +50,7 @@ class AddPostView(generic.CreateView):
 
 
 
-
+class DeletePostView(AuthorAccessMixin,generic.DeleteView):
+    template_name = 'home/delete-post.html'
+    model = PostModel
+    success_url = reverse_lazy('home:home')

@@ -82,7 +82,9 @@
                     </div>
                     <div class="timeline-footer">
                       <a class="btn btn-primary btn-sm">Read more</a>
-                      <a class="btn btn-danger btn-sm">Delete</a>
+                      {% if request.user == post.author %}
+                      <a href="{% url 'home:delete-post' post.author.username post.slug %}" class="btn btn-danger btn-sm">Delete</a>
+                      {% endif %}
                       <a class="btn btn-warning btn-sm">View comment</a>
                     </div>
                   </div>
