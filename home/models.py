@@ -52,7 +52,7 @@ def Uploaded_size(value):
 
 #Post Model
 class PostModel(models.Model):
-    Status = (
+    post_status = (
         ('p','Published'),
         ('d','Draft'),
         ('i','Investigation'),
@@ -68,7 +68,7 @@ class PostModel(models.Model):
     category = models.ManyToManyField(CategoryModel,related_name='category')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=1,choices=Status)
+    status = models.CharField(max_length=1,choices=post_status)
     objects = PostManager()
 
 
@@ -81,6 +81,25 @@ class PostModel(models.Model):
     def __str__(self):
         return f"{self.author} - {self.title[:10]}"
 
+
+
+class CommentModel(models.Model):
+    cm_status = (
+        ('A','Accepted'),
+        ('i','Investigation'),
+        ('R','Rejected'),
+    )
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True) 
+    post = models.ForeignKey(PostModel,on_delete=models.CASCADE,null=True,related_name='post')
+    comment = models.TextField(max_length=400)
+    created = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=1,choices=cm_status)
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f"{self.user} - {self.comment}"
 
 
 class IPAdressModel(models.Model):

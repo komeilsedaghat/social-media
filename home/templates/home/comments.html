@@ -1,0 +1,133 @@
+{% extends '_base.html' %}
+{% block title %}Comment{% endblock %}
+{% block page_name %}
+Comment
+{% endblock %}
+{% load static %}
+{% block content %}
+<section class="content">
+    <div class="container-fluid">
+
+      <!-- Timelime example  -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- The time line -->
+          <div class="timeline">
+            <!-- timeline time label -->
+            <div class="time-label">
+              <span class="bg-red">{{post.created}}</span>
+            </div>
+                <div>
+                    <i class="fas fa-user bg-maroon"></i>
+                    <div class="timeline-item ">
+                    <span class="time"><i class="fas fa-clock"></i> {{post.created|timesince}}</span>
+                    <h3 class="timeline-header ">
+                    <a href="#">
+                        {{post.author}}
+                    </a>
+                    shared a
+                    {% if post.video %}
+                    video
+                    {% elif post.image %}
+                        image
+                    {% elif post.audio %}
+                        audio 
+                    {% else %}
+                        text
+                    {% endif %}                   
+                    </h3>
+                    <div class="timeline-body">
+                        {% if post.video %}
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <video  controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                            </video> 
+                        </div>
+                        {% elif post.image %}
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <img class="embed-responsive-item" src="{{ post.image.url }}" allowfullscreen></img>
+                        </div>
+                        {% elif post.audio %}
+                        <audio controls class="size">
+                            <source src="{{post.audio.url}}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                        </audio> 
+                        {% endif %}
+                        <div class="timeline-body">
+                        <h2>
+                        <div class="badge bg-white text-dark">
+                            {{post.title}}
+                        </h2>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <div>
+        </div>
+    </div>
+</div>
+<!-- /.col -->
+</div>
+</div>
+</section>
+
+<div class="comment-section">
+<div class="col-md-12 col-sm-12 col-12">
+    <div class="info-box bg-gradient-info">
+      <span class="info-box-icon"><i class="fas fa-comments"></i></span>
+
+      <div class="info-box-content">
+        <span class="info-box-text">Comments</span>
+        <span class="info-box-number">{{total_comments}}</span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+</div>
+<hr>
+  <div class="row comments">
+    <div class="col-12">
+      <div class="card-footer">
+        <form action="#" method="post">
+          {% csrf_token %}
+          {% if request.user.profile_img %}
+          <img class="img-fluid img-circle img-sm" src="{{ request.user.profile_img.url }}" alt="Alt Text">
+          {% else %}
+          <li class="fas fa-user img-fluid img-circle img-sm "></li>
+          {% endif %}
+          <!-- .img-push is used to add margin to elements next to floating images -->
+          <div class="img-push">
+            {{form.comment}}
+          </div>
+          <div>
+            <input type="submit" value="Send Comment" class="btn-block btn btn-success btn-send">
+          </div>
+        </form>
+      </div>
+        {% for cm in comments %}
+        <div class="post">
+          <div class="user-block">
+            {% if cm.user.profile_img  %}
+            <img class="img-circle img-bordered-sm" src="{{cm.user.profile_img.url}}" alt="user image">
+            {% else %}
+            <li class="fas fa-user img-fluid img-circle img-sm "></li>
+
+            {% endif %}
+            <span class="username">
+              <a href="#">{{cm.user}}</a>
+            </span>
+            <span class="description">{{cm.created|timesince}}</span>
+          </div>
+          <!-- /.user-block -->
+          <p class="comment-text">
+          {{cm.comment}}
+          </p>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

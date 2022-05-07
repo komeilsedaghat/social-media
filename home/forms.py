@@ -1,5 +1,5 @@
 from django import forms
-from .models import PostModel
+from .models import CommentModel, PostModel
 
 class AddPostForm(forms.ModelForm):
     file = forms.FileField(required=False,widget=forms.FileInput(attrs={'class':'custom-file-input','id':'exampleInputFile'}))
@@ -11,3 +11,15 @@ class AddPostForm(forms.ModelForm):
         super(AddPostForm,self).__init__(*args,**kwargs)
         
         self.fields['title'].widget.attrs = {'class':'form-control'}
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = CommentModel
+        fields = ('comment',)
+        
+    def __init__(self,*args,**kwargs):
+        super(CommentForm,self).__init__(*args,**kwargs)
+        
+        self.fields['comment'].widget.attrs = {'class':'form-control','placeholder':'Comment...'}

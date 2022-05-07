@@ -1,5 +1,10 @@
 {% extends '_base.html' %}
 
+{% block title %}New Posts{% endblock %}
+
+{% block page_name %}
+New Post
+{% endblock %}
 
     <!-- Main content -->
     {% block content %}
@@ -81,11 +86,11 @@
                       </div>
                     </div>
                     <div class="timeline-footer">
-                      <a class="btn btn-primary btn-sm">Read more</a>
                       {% if request.user == post.author %}
-                      <a href="{% url 'home:delete-post' post.author.username post.slug %}" class="btn btn-danger btn-sm">Delete</a>
+                      <a href="{% url 'home:edit-post' post.author.username post.slug post.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                      <a href="{% url 'home:delete-post' post.author.username post.slug post.pk %}" class="btn btn-danger btn-sm">Delete</a>
                       {% endif %}
-                      <a class="btn btn-warning btn-sm">View comment</a>
+                      <a href="{% url 'home:comment' post.author.username post.slug post.pk %}" class="btn btn-warning btn-sm">View comments</a>
                     </div>
                   </div>
                 </div>

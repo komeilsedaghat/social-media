@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PostModel,CategoryModel,IPAdressModel
+from .models import PostModel,CategoryModel,IPAdressModel,CommentModel
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -19,6 +19,18 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(CategoryModel,CategoryAdmin)
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user','comment','status')
+    list_filter = ('status','user')
+    search_field = ('comment',)
 
-admin.site.register(IPAdressModel)
+admin.site.register(CommentModel,CommentAdmin)
+
+
+
+
+class IPAdressAdmin(admin.ModelAdmin):
+    list_display = ('user','IP_Address')
+
+admin.site.register(IPAdressModel,IPAdressAdmin)
 

@@ -24,8 +24,11 @@ python3 manage.py createsuperuser
 ## Features
 * Custom User
 * Share Video,Audio and image
-* Registration User(authenticate can be with email or username)
-* validation for registration user(Create a password list for validate input passwords)
+* Registration User(Authenticate Can Be With Email or Username)
+* Validation For Registration User(Create a Password List For Validate Input Passwords)
+* Add,Edit And Delete Post
+* Comment Section
+
 
 
 
