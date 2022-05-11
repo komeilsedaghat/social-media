@@ -89,7 +89,8 @@ class CommentModel(models.Model):
         ('i','Investigation'),
         ('R','Rejected'),
     )
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True) 
+    from_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name="from_user") 
+    to_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name="to_user")
     post = models.ForeignKey(PostModel,on_delete=models.CASCADE,null=True,related_name='post')
     comment = models.TextField(max_length=400)
     created = models.DateTimeField(auto_now_add=True)
@@ -99,7 +100,7 @@ class CommentModel(models.Model):
         ordering = ('-created',)
 
     def __str__(self):
-        return f"{self.user} - {self.comment}"
+        return f"{self.from_user} - {self.comment}"
 
 
 class IPAdressModel(models.Model):

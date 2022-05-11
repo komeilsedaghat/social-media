@@ -20,8 +20,8 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(CategoryModel,CategoryAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user','comment','status')
-    list_filter = ('status','user')
+    list_display = ('from_user','comment','status')
+    list_filter = ('status','from_user')
     search_field = ('comment',)
 
 admin.site.register(CommentModel,CommentAdmin)

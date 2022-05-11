@@ -23,3 +23,16 @@ class CommentForm(forms.ModelForm):
         super(CommentForm,self).__init__(*args,**kwargs)
         
         self.fields['comment'].widget.attrs = {'class':'form-control','placeholder':'Comment...'}
+
+
+
+class CommentMessagesForm(forms.ModelForm):
+    class Meta:
+        model = CommentModel
+        fields = ('status',)
+        
+    def __init__(self,*args,**kwargs):
+        super(CommentMessagesForm,self).__init__(*args,**kwargs)
+        
+        self.fields['status'].widget.attrs = {'class':'form-control'}
+

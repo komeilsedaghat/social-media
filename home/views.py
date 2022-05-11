@@ -1,15 +1,15 @@
-from builtins import print
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import CommentModel, PostModel,CategoryModel
 from django.views import generic
-from .forms import AddPostForm, CommentForm
+from .forms import AddPostForm, CommentForm, CommentMessagesForm
 from django.contrib.auth import get_user_model
-from .mixins import AuthorAccessMixin
+from .mixins import AuthorAccessMixin, SuperUserAuthorAccessMixin
 from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 # Create your views here.
 
 User = get_user_model()
@@ -23,7 +23,7 @@ class HomeView(LoginRequiredMixin,View):
         return render(request,'home/home.html',context=context)
 
     def post(self,request):
-        pass 
+        pass
 
 
 class AddPostView(generic.CreateView):
@@ -42,7 +42,7 @@ class AddPostView(generic.CreateView):
                 post_form.video = file
             if "image" in file.content_type:
                 post_form.image = file
-            
+
         post_form.author = self.request.user
         post_form.slug = slugify(form.cleaned_data['title'])
         post_form.status = 'p'
@@ -82,13 +82,14 @@ class CommentPostView(LoginRequiredMixin,View):
         }
         return render(request,self.template_name,context)
 
-        
+
     def post(self,request,username,slug,pk):
         post = PostModel.objects.get(slug=slug)
         form = CommentForm(request.POST)
         if form.is_valid:
             cm_form = form.save(commit=False)
-            cm_form.user = request.user
+            cm_form.from_user = request.user
+            cm_form.to_user = post.author
             cm_form.post = post
             cm_form.status = 'i'
             cm_form.save()
@@ -97,8 +98,16 @@ class CommentPostView(LoginRequiredMixin,View):
 
 
 
-class MessagesProfileView(View):
+class MessagesProfileView(LoginRequiredMixin,View):
     def get(self,request):
-        pass 
-    def post(self,request):
+        comments = CommentModel.objects.filter(Q(to_user = request.user) & Q(status = 'i'))
+        return render(request,'home/messages.html',{'comments':comments})
+    def post(self,request): 
         pass
+
+
+class AcceptCommentView(SuperUserAuthorAccessMixin,LoginRequiredMixin,View):
+    def get(self, request,pk):
+        cm = CommentModel.objects.filter(pk=pk)
+        cm.update(status='A')
+        return redirect('home:messages')

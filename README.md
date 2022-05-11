@@ -28,6 +28,7 @@ python3 manage.py createsuperuser
 * Validation For Registration User(Create a Password List For Validate Input Passwords)
 * Add,Edit And Delete Post
 * Comment Section
+* Message Section(For Accept Comments)
 
 
 
