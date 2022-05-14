@@ -29,6 +29,7 @@ python3 manage.py createsuperuser
 * Add,Edit And Delete Post
 * Comment Section
 * Message Section(For Accept Comments)
+* TFA(Two Factor Authentication)|Send Code To Email User
 
 
 

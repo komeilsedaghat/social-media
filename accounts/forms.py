@@ -15,6 +15,8 @@ class SigninUserForm(AuthenticationForm):
         self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Username Or Email '})
         self.fields['password'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Your Password'})
 
+class SigninVerifyForm(forms.Form):
+    code = forms.IntegerField(widget=forms.TextInput(attrs={'class':'form-control'}))
 
 
 class SignupUserForm(UserCreationForm):

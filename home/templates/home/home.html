@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block title %}New Posts{% endblock %}
 
 {% block page_name %}
@@ -19,7 +19,7 @@ New Post
             <div class="timeline">
               <!-- timeline time label -->
               <div class="time-label">
-                <span class="bg-red">10 Feb. 2014</span>
+             
               </div>
               <!-- /.timeline-label -->
               <!-- timeline item -->
@@ -29,12 +29,16 @@ New Post
                   <span class="time"><i class="fas fa-clock"></i> 12:05</span>
                   <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
 
+                  {% if request.user.TFA == True %}
                   <div class="timeline-body">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                    quora plaxo ideeli hulu weebly balihoo...
+                    
                   </div>
+                  {% else %}
+                  <div class="timeline-body alert bg-danger">
+                    For More Security Enable Your TFA(Two Factor Authentication)
+                  </div>
+                    {% endif %}
+
 
                 </div>
               </div>
@@ -92,7 +96,7 @@ New Post
                       {% endif %}
                       <a href="{% url 'home:comment' post.author.username post.slug post.pk %}" class="btn btn-warning btn-sm">View comments</a>
                     </div>
-                  </div>
+                  </div> 
                 </div>
               {% endfor %}
               <!-- END timeline item -->
@@ -108,5 +112,8 @@ New Post
 
     </section>
     {% endblock %}
+    {% block link_js %}
+      <script src="{% static 'home/dist/js/script.js' %}"></script>
+    {% endblock link_js %}
     <!-- /.content -->
  

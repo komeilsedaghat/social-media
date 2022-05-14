@@ -1,0 +1,37 @@
+{% extends 'accounts/registrations/_base.html' %}
+
+{% block content %}
+<div class="login-box">
+    <div class="login-logo">
+      <a href="../../index2.html"><b>Social</b>MEDIA</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Verify Code</p>
+  
+        <form method="post">
+          {% csrf_token %}
+          <div class="input-group mb-3">
+            {{form.code}}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+            <input type="submit" value="Send" class="btn btn-primary btn-block">
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+{% endblock %}

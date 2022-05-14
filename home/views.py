@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import CommentModel, PostModel,CategoryModel
@@ -16,7 +16,10 @@ User = get_user_model()
 
 
 class HomeView(LoginRequiredMixin,View):
+    
     def get(self,request):
+
+
         context = {
             'posts':PostModel.objects.publish()
         }
@@ -24,7 +27,6 @@ class HomeView(LoginRequiredMixin,View):
 
     def post(self,request):
         pass
-
 
 class AddPostView(generic.CreateView):
     form_class = AddPostForm
@@ -101,7 +103,19 @@ class CommentPostView(LoginRequiredMixin,View):
 class MessagesProfileView(LoginRequiredMixin,View):
     def get(self,request):
         comments = CommentModel.objects.filter(Q(to_user = request.user) & Q(status = 'i'))
-        return render(request,'home/messages.html',{'comments':comments})
+        post_count = PostModel.objects.filter(author=request.user).count()
+        uploaded_file_count = PostModel.objects.filter(~Q(video=None) & ~Q(image=None) & ~Q(audio=None) & Q(author=request.user)).count()
+        comment_count =CommentModel.objects.filter(to_user = request.user).count()
+
+
+        context = {
+            'comments':comments,
+            'post_count':post_count,
+            'comment_count':comment_count,
+            'uploaded_file_count':uploaded_file_count,
+        }
+        
+        return render(request,'home/messages.html',context)
     def post(self,request): 
         pass
 
@@ -111,3 +125,4 @@ class AcceptCommentView(SuperUserAuthorAccessMixin,LoginRequiredMixin,View):
         cm = CommentModel.objects.filter(pk=pk)
         cm.update(status='A')
         return redirect('home:messages')
+

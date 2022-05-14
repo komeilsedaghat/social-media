@@ -10,6 +10,8 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{% static 'home/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'home/dist/css/adminlte.min.css' %}">
   <link rel="stylesheet" href="{% static 'home/dist/css/rtl.css' %}">
@@ -80,9 +82,11 @@
 <script src="{% static 'home/plugins/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'home/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
+{% block link_js %}
+{% endblock link_js %}
 <!-- Bootstrap 4 -->
 <script src="{% static 'home/dist/js/adminlte.js' %}"></script>
 <script src="{% static 'home/dist/js/pages/dashboard.js' %}"></script>
+
 </body>
 </html>
