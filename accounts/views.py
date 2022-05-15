@@ -1,8 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseRedirect
-from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login 
@@ -11,7 +10,7 @@ from django.contrib import messages
 import random
 from django.conf import settings
 from accounts.models import OtpCode
-from .mixins import FieldMixin
+from django.contrib.auth import views
 from .forms import SignupUserForm,SigninUserForm,ProfileUserForm,SigninVerifyForm
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
@@ -94,6 +93,36 @@ class SignupUserView(CreateView):
     success_url = reverse_lazy('accounts:signin')
     form_class = SignupUserForm
     success_message = "Your profile was created successfully"
+
+
+class PassChangeView(views.PasswordChangeView):
+    template_name ='accounts/registrations/password_change/password_change_form.html'
+    success_url = reverse_lazy('accounts:password_change_done')
+
+class PassChangeDoneView(views.PasswordChangeDoneView):
+    template_name ='accounts/registrations/password_change/password_change_done.html'
+    success_url = reverse_lazy('accounts:signin')
+
+
+
+
+class PassResetView(views.PasswordResetView):
+    template_name = 'accounts/registrations/password_reset/password_reset_form.html'
+    success_url = reverse_lazy('accounts:password_reset_done')
+    email_template_name = 'accounts/registrations/password_reset/password_reset_email.html'
+
+
+class PassResetDoneView(views.PasswordResetDoneView):
+   template_name = 'accounts/registrations/password_reset/password_reset_done.html'
+
+
+class PassResetConfirm(views.PasswordResetConfirmView):
+    template_name = 'accounts/registrations/password_reset/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password_reset_complete')
+
+class PassResetComplete(views.PasswordResetCompleteView):
+    template_name = 'accounts/registrations/password_reset/password_reset_complete.html'
+
 
 
 class LogoutUserView(LoginRequiredMixin,View):

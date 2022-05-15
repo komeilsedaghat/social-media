@@ -30,6 +30,7 @@ python3 manage.py createsuperuser
 * Comment Section
 * Message Section(For Accept Comments)
 * TFA(Two Factor Authentication)|Send Code To Email User
+* Password Change And Reset
 
 
 

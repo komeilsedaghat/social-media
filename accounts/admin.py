@@ -21,4 +21,8 @@ UserAdmin.list_display += (
 
 admin.site.register(User,UserAdmin)
 
-admin.site.register(OtpCode)
+
+class OtpCodeAdmin(admin.ModelAdmin):
+    list_display = ('email','code','created')
+
+admin.site.register(OtpCode,OtpCodeAdmin)
