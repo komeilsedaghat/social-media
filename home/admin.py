@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PostModel,CategoryModel,IPAdressModel,CommentModel
+from .models import PostModel,CategoryModel,IPAdressModel,CommentModel,ReportPostModel
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -34,3 +34,9 @@ class IPAdressAdmin(admin.ModelAdmin):
 
 admin.site.register(IPAdressModel,IPAdressAdmin)
 
+
+class ReportPostAdmin(admin.ModelAdmin):
+    list_display = ('from_user','to_user','report_text')
+    list_filter = ('from_user','to_user','post','created',)
+
+admin.site.register(ReportPostModel,ReportPostAdmin)

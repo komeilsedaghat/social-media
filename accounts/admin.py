@@ -13,6 +13,7 @@ UserAdmin.fieldsets[1][1]['fields'] = (
                         'email',
                         'phone_number',
                         'TFA',
+                        'blocked_users',
 )
 
 UserAdmin.list_display += (

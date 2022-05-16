@@ -1,14 +1,15 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import CommentModel, PostModel,CategoryModel
+from .models import CommentModel, PostModel,CategoryModel, ReportPostModel
 from django.views import generic
-from .forms import AddPostForm, CommentForm, CommentMessagesForm
+from .forms import AddPostForm, CommentForm, CommentMessagesForm, ReportPostForm
 from django.contrib.auth import get_user_model
 from .mixins import AuthorAccessMixin, SuperUserAuthorAccessMixin
 from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.db.models import Q
 # Create your views here.
 
@@ -18,10 +19,11 @@ User = get_user_model()
 class HomeView(LoginRequiredMixin,View):
     
     def get(self,request):
-
-
+        user = User.objects.get(username=request.user.username)
+        user_blocked = user.blocked_users.all()
         context = {
-            'posts':PostModel.objects.publish()
+            'posts':PostModel.objects.filter(~Q(author__in=user_blocked)),
+            
         }
         return render(request,'home/home.html',context=context)
 
@@ -126,3 +128,24 @@ class AcceptCommentView(SuperUserAuthorAccessMixin,LoginRequiredMixin,View):
         cm.update(status='A')
         return redirect('home:messages')
 
+
+
+
+class ReportPostView(View):
+    template_name = 'home/report-post.html'
+    form_class = ReportPostForm
+    def get(self,request,author,slug):
+        form = self.form_class
+        return render(request,self.template_name,{'form':form})
+    def post(self,request,author,slug):
+        from_user = User.objects.get(username = request.user.username)
+        to_user = User.objects.get(username=author)
+        post = PostModel.objects.get(slug=slug)
+        form=self.form_class(request.POST)
+        if form.is_valid():
+            report_text = form.cleaned_data['report_text']
+            ReportPostModel.objects.create(from_user=from_user,to_user=to_user,post=post,report_text=report_text)
+            messages.success(request,"Thank's For Report")
+            return redirect('home:home')
+        return redirect('home:home')
+        

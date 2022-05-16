@@ -10,5 +10,6 @@ urlpatterns = [
     path('comments/<str:username>/<str:slug>/<int:pk>/',views.CommentPostView.as_view(),name='comment'),
     path('messages/',views.MessagesProfileView.as_view(),name='messages'),
     path('accept-message/<int:pk>/',views.AcceptCommentView.as_view(),name='accept-comment'),
+    path('report-post/<str:author>/<slug:slug>/',views.ReportPostView.as_view(),name='report-post')
 
 ]

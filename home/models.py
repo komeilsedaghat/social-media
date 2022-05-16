@@ -82,6 +82,16 @@ class PostModel(models.Model):
         return f"{self.author} - {self.title[:10]}"
 
 
+class ReportPostModel(models.Model):
+    from_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name='report_from_user')
+    to_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name="report_to_user")
+    post  = models.ForeignKey(PostModel,on_delete=models.CASCADE,null=True)
+    report_text = models.TextField(max_length=470,null=True)
+    created = models.DateTimeField(auto_now_add=True,null=True)
+
+    def __str__(self):
+        return f"{self.to_user}-{self.post}"
+
 
 class CommentModel(models.Model):
     cm_status = (
@@ -110,6 +120,7 @@ class IPAdressModel(models.Model):
 
     def __str__(self):
         return self.IP_Address
+
 
 
 

@@ -12,6 +12,7 @@ class User(AbstractUser):
     age = models.PositiveSmallIntegerField(null=True,blank=True)
     profile_img = models.ImageField(upload_to='users/pics/',blank=True)
     TFA = models.BooleanField(default=False)
+    blocked_users = models.ManyToManyField('self', symmetrical=False,related_name='blocked')
 
 
 class OtpCode(models.Model):
@@ -22,3 +23,4 @@ class OtpCode(models.Model):
 
     def __str__(self):
         return f"{self.email} - {self.code} - {self.created}"
+

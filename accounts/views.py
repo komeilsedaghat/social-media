@@ -151,3 +151,11 @@ class ProfileUserView(View):
             return redirect('accounts:profile',username)
         return redirect('accounts:profile',username)
             
+
+class BlockUserView(View):
+    def get(self,request,username):
+        user = User.objects.get(username=username)
+        self_user = User.objects.get(username=request.user.username)
+        self_user.blocked_users.add(user)
+        messages.success(request,f"User '{username}' Blocked Successfully ")
+        return redirect('home:home')

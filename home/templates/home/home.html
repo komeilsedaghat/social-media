@@ -93,6 +93,8 @@ New Post
                       {% if request.user == post.author %}
                       <a href="{% url 'home:edit-post' post.author.username post.slug post.pk %}" class="btn btn-primary btn-sm">Edit</a>
                       <a href="{% url 'home:delete-post' post.author.username post.slug post.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                      {% else %}
+                      <a href="{% url 'home:report-post' post.author post.slug %}" class="btn btn-danger btn-sm">Report Post</a>
                       {% endif %}
                       <a href="{% url 'home:comment' post.author.username post.slug post.pk %}" class="btn btn-warning btn-sm">View comments</a>
                     </div>

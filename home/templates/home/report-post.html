@@ -1,0 +1,20 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+<div class="col-md-12">
+    <div class="card card-danger">
+      <div class="card-header">
+        <h3 class="card-title">REPORT</h3>
+      </div>
+      <div class="card-body">
+        {{form.report_text}}
+      </div>
+      <input class="btn btn-dark" type="submit" value="Send Report">
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</form>
+{% endblock %}
