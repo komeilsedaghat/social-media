@@ -31,6 +31,7 @@ python3 manage.py createsuperuser
 * Message Section(For Accept Comments)
 * TFA(Two Factor Authentication)|Send Code To Email User
 * Change And Reset Password
+* Follow And Unfollow Users
 
 
 

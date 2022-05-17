@@ -1,4 +1,10 @@
 {% extends '_base.html' %}
+{% load static %}
+
+{% block link_js %}
+<script src="{% static 'accounts/js/script.js' %}"></script>
+{% endblock link_js %}
+
 
 {% block content %}
 
@@ -24,17 +30,21 @@
 
         <ul class="list-group list-group-unbordered mb-3">
           <li class="list-group-item">
-            <b>Followers</b> <a class="float-right">1,322</a>
+            <b>Followers</b> <a class="float-right">{{follower}}</a>
           </li>
           <li class="list-group-item">
-            <b>Following</b> <a class="float-right">543</a>
+            <b>Following</b> <a class="float-right">{{following}}</a>
           </li>
           <li class="list-group-item">
-            <b>Friends</b> <a class="float-right">13,287</a>
+            <b>Posts</b> <a class="float-right">{{post}}</a>
           </li>
         </ul>
 
-        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+        {% if is_following == False %}
+        <button id="following_btn" data-id="{{ user.id }}" class="btn btn-primary button-follow btn-block">follow</button>
+        {% else %}
+        <button id="following_btn" data-id="{{ user.id }}" class="btn btn-warning button-follow btn-block">unfollow</button>
+        {% endif %}
       </div>
       <!-- /.card-body -->
     </div>

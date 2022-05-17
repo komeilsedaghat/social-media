@@ -50,7 +50,7 @@ New Post
                   <div class="timeline-item ">
                     <span class="time"><i class="fas fa-clock"></i> {{post.created|timesince}}</span>
                     <h3 class="timeline-header ">
-                    <a href="#">
+                    <a href="{%url 'accounts:profile' post.author %}">
                       {{post.author}}
                     </a>
                     shared a

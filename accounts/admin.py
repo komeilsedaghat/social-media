@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
-from .models import OtpCode
+from .models import OtpCode,FollowUserModel
 # Register your models here.
 
 User = get_user_model()
@@ -27,3 +27,9 @@ class OtpCodeAdmin(admin.ModelAdmin):
     list_display = ('email','code','created')
 
 admin.site.register(OtpCode,OtpCodeAdmin)
+
+
+class FollowUserAdmin(admin.ModelAdmin):
+    list_display = ('from_user','to_user','created')
+
+admin.site.register(FollowUserModel,FollowUserAdmin)

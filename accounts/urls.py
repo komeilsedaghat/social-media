@@ -20,5 +20,9 @@ urlpatterns = [
     path('password-reset/complete/',views.PassResetComplete.as_view(),name='password_reset_complete'),
   
     path('block-user/<str:username>/',views.BlockUserView.as_view(),name='block'),
-    path('profile/<str:username>/',views.ProfileUserView.as_view(),name='profile')
+    path('profile/<str:username>/',views.ProfileUserView.as_view(),name='profile'),
+
+    #Follow & UnFollow
+    path('follow/',views.FollowUserView.as_view(),name='follow'),
+    path('unfollow/',views.UnFollowUserView.as_view(),name='unfollow'),
 ]

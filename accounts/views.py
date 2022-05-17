@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import logout
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,11 +9,12 @@ from django.views.generic import View
 from django.contrib import messages
 import random
 from django.conf import settings
-from accounts.models import OtpCode
+from accounts.models import FollowUserModel, OtpCode
 from django.contrib.auth import views
 from .forms import SignupUserForm,SigninUserForm,ProfileUserForm,SigninVerifyForm
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
+from home.models  import PostModel
 
 User = get_user_model()
 
@@ -139,7 +140,21 @@ class ProfileUserView(View):
             return render(request,'accounts/users/self-profile.html',{'form':form})
         else:
             user = get_object_or_404(User.objects.only('username','first_name','last_name'),username=username)
-            return render(request,'accounts/users/profile.html',{'user':user})
+            is_following = False
+            if FollowUserModel.objects.filter(from_user=request.user,to_user=user).exists():
+                is_following = True
+            follower=FollowUserModel.objects.filter(to_user = user).count()
+            following = FollowUserModel.objects.filter(from_user = user).count()
+            posts = PostModel.objects.filter(author=user).count()
+            context ={
+                'follower':follower,
+                'following':following,
+                'post':posts,
+                'is_following':is_following,
+                'user':user,
+            }
+            return render(request,'accounts/users/profile.html',context)
+
             
         
     def post(self,request,username):
@@ -159,3 +174,29 @@ class BlockUserView(View):
         self_user.blocked_users.add(user)
         messages.success(request,f"User '{username}' Blocked Successfully ")
         return redirect('home:home')
+
+
+class FollowUserView(View):
+    def post(self,request):
+        user_id = request.POST['user_id']
+        following = get_object_or_404(User, pk=user_id)
+        check_relation = FollowUserModel.objects.filter(from_user=request.user, to_user=following)
+        if check_relation.exists():
+            return JsonResponse({'status':'exists'})
+        else:
+            FollowUserModel(from_user=request.user, to_user=following).save()
+            return JsonResponse({'status':'ok'})
+
+
+class UnFollowUserView(View):
+    def post(self,request):
+        user_id = request.POST['user_id']
+        following = get_object_or_404(User, pk=user_id)
+        check_relation = FollowUserModel.objects.filter(from_user=request.user, to_user=following)
+        if check_relation.exists():
+            check_relation.delete()
+            return JsonResponse({'status':'ok'})
+        else:
+            return JsonResponse({'status':'notexists'})
+
+
