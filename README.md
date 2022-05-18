@@ -32,6 +32,7 @@ python3 manage.py createsuperuser
 * TFA(Two Factor Authentication)|Send Code To Email User
 * Change And Reset Password
 * Follow And Unfollow Users
+* Login With GOOGLE
 
 
 
