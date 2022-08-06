@@ -1,9 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import CommentModel, PostModel,CategoryModel, ReportPostModel
+from .models import CommentModel, PostModel, ReportPostModel
 from django.views import generic
-from .forms import AddPostForm, CommentForm, CommentMessagesForm, ReportPostForm
+from .forms import AddPostForm, CommentForm, ReportPostForm
 from django.contrib.auth import get_user_model
 from .mixins import AuthorAccessMixin, SuperUserAuthorAccessMixin
 from django.utils.text import slugify
