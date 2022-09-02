@@ -91,12 +91,12 @@ New Post
                     </div>
                     <div class="timeline-footer">
                       {% if request.user == post.author %}
-                      <a href="{% url 'home:edit-post' post.author.username post.slug post.pk %}" class="btn btn-primary btn-sm">Edit</a>
-                      <a href="{% url 'home:delete-post' post.author.username post.slug post.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                      <a href="{% url 'home:edit-post' post.author.username post.slug post.pk %}" class="btn btn-secondary btn-edit">Edit</a>
+                      <a href="{% url 'home:delete-post' post.author.username post.slug post.pk %}" class="btn btn-danger btn-delete">Delete</a>
                       {% else %}
-                      <a href="{% url 'home:report-post' post.author post.slug %}" class="btn btn-danger btn-sm">Report Post</a>
+                      <a href="{% url 'home:report-post' post.author post.slug %}" class="btn btn-danger btn-report">Report Post</a>
                       {% endif %}
-                      <a href="{% url 'home:comment' post.author.username post.slug post.pk %}" class="btn btn-warning btn-sm">View comments</a>
+                      <a href="{% url 'home:comment' post.author.username post.slug post.pk %}" class="btn btn-warning btn-comment">View comments</a>
                     </div>
                   </div> 
                 </div>

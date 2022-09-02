@@ -31,20 +31,20 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{% url 'home:add-post' %}" class="nav-link {% if request.resolver_match.url_name == 'add-post' %}active{% endif %} ">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-add nav-icon"></i>
                   <p>Add Post</p>
                   
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{% url 'accounts:profile' request.user %}" class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="far fa-id-card nav-icon"></i>
                   <p>Profile</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'home:messages' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="{% url 'home:messages' %}" class="nav-link {% if request.resolver_match.url_name == 'messages' %}active{% endif %}">
+                  <i class="far fa-message nav-icon"></i>
                   <p>Messages</p>
                 </a>
               </li>

@@ -1,9 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import  HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
-from .models import CommentModel, PostModel,CategoryModel, ReportPostModel
+from .models import CommentModel, PostModel, ReportPostModel
 from django.views import generic
-from .forms import AddPostForm, CommentForm, CommentMessagesForm, ReportPostForm
+from .forms import AddPostForm, CommentForm, ReportPostForm
 from django.contrib.auth import get_user_model
 from .mixins import AuthorAccessMixin, SuperUserAuthorAccessMixin
 from django.utils.text import slugify
@@ -131,17 +131,19 @@ class AcceptCommentView(SuperUserAuthorAccessMixin,LoginRequiredMixin,View):
 
 
 
-class ReportPostView(View):
+class ReportPostView(LoginRequiredMixin,View):
     template_name = 'home/report-post.html'
     form_class = ReportPostForm
     def get(self,request,author,slug):
         form = self.form_class
         return render(request,self.template_name,{'form':form})
+
     def post(self,request,author,slug):
         from_user = User.objects.get(username = request.user.username)
         to_user = User.objects.get(username=author)
         post = PostModel.objects.get(slug=slug)
         form=self.form_class(request.POST)
+
         if form.is_valid():
             report_text = form.cleaned_data['report_text']
             ReportPostModel.objects.create(from_user=from_user,to_user=to_user,post=post,report_text=report_text)

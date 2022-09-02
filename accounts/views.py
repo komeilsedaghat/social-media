@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.http import Http404
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth import logout
 from django.views.generic.edit import CreateView
@@ -96,32 +97,32 @@ class SignupUserView(CreateView):
     success_message = "Your profile was created successfully"
 
 
-class PassChangeView(views.PasswordChangeView):
+class PassChangeView(LoginRequiredMixin,views.PasswordChangeView):
     template_name ='accounts/registrations/password_change/password_change_form.html'
     success_url = reverse_lazy('accounts:password_change_done')
 
-class PassChangeDoneView(views.PasswordChangeDoneView):
+class PassChangeDoneView(LoginRequiredMixin,views.PasswordChangeDoneView):
     template_name ='accounts/registrations/password_change/password_change_done.html'
     success_url = reverse_lazy('accounts:signin')
 
 
 
 
-class PassResetView(views.PasswordResetView):
+class PassResetView(LoginRequiredMixin,views.PasswordResetView):
     template_name = 'accounts/registrations/password_reset/password_reset_form.html'
     success_url = reverse_lazy('accounts:password_reset_done')
     email_template_name = 'accounts/registrations/password_reset/password_reset_email.html'
 
 
-class PassResetDoneView(views.PasswordResetDoneView):
+class PassResetDoneView(LoginRequiredMixin,views.PasswordResetDoneView):
    template_name = 'accounts/registrations/password_reset/password_reset_done.html'
 
 
-class PassResetConfirm(views.PasswordResetConfirmView):
+class PassResetConfirm(LoginRequiredMixin,views.PasswordResetConfirmView):
     template_name = 'accounts/registrations/password_reset/password_reset_confirm.html'
     success_url = reverse_lazy('accounts:password_reset_complete')
 
-class PassResetComplete(views.PasswordResetCompleteView):
+class PassResetComplete(LoginRequiredMixin,views.PasswordResetCompleteView):
     template_name = 'accounts/registrations/password_reset/password_reset_complete.html'
 
 
@@ -140,6 +141,8 @@ class ProfileUserView(View):
             return render(request,'accounts/users/self-profile.html',{'form':form})
         else:
             user = get_object_or_404(User.objects.only('username','first_name','last_name'),username=username)
+            print(100*';')
+            print(request.user.blocked_users)
             is_following = False
             if FollowUserModel.objects.filter(from_user=request.user,to_user=user).exists():
                 is_following = True
@@ -167,13 +170,13 @@ class ProfileUserView(View):
         return redirect('accounts:profile',username)
             
 
-class BlockUserView(View):
+class BlockUserView(LoginRequiredMixin,View):
     def get(self,request,username):
         user = User.objects.get(username=username)
-        self_user = User.objects.get(username=request.user.username)
-        self_user.blocked_users.add(user)
-        messages.success(request,f"User '{username}' Blocked Successfully ")
-        return redirect('home:home')
+        if user is not None:
+            request.user.blocked_users.add(user)
+            messages.success(request,f"User '{username}' Blocked Successfully ")
+            return redirect('home:home')
 
 
 class FollowUserView(View):
