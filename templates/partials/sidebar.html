@@ -30,21 +30,35 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+<<<<<<< HEAD
                 <a href="{% url 'home:add-post' %}" class="nav-link {% if request.resolver_match.url_name == 'add-post' %}active{% endif %} ">
                   <i class="far fa-add nav-icon"></i>
+=======
+                <a href="{% url 'home:add-post' %}" class="nav-link {% if request.resolver_match.url_name == 'add-post' %}active{% endif %}  ">
+                  <i class="fa-solid fa-pen-to-square"></i>
+>>>>>>> 3b1415b5629d610e8c5b5e446ce66207e740dbf1
                   <p>Add Post</p>
                   
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{% url 'accounts:profile' request.user %}" class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+<<<<<<< HEAD
                   <i class="far fa-id-card nav-icon"></i>
+=======
+                  <i class="fas fa-solid fa-address-card"></i>
+>>>>>>> 3b1415b5629d610e8c5b5e446ce66207e740dbf1
                   <p>Profile</p>
                 </a>
               </li>
               <li class="nav-item">
+<<<<<<< HEAD
                 <a href="{% url 'home:messages' %}" class="nav-link {% if request.resolver_match.url_name == 'messages' %}active{% endif %}">
                   <i class="far fa-message nav-icon"></i>
+=======
+                <a href="{% url 'home:messages' %}" class="nav-link">
+                  <i class="fa-solid fa-envelope-open-text"></i>
+>>>>>>> 3b1415b5629d610e8c5b5e446ce66207e740dbf1
                   <p>Messages</p>
                 </a>
               </li>

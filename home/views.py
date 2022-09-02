@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from django.http import  HttpResponseRedirect
+=======
+from django.http import HttpResponseRedirect
+>>>>>>> 3b1415b5629d610e8c5b5e446ce66207e740dbf1
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from .models import CommentModel, PostModel, ReportPostModel

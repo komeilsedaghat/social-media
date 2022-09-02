@@ -48,6 +48,11 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'accounts.apps.AccountsConfig',
     'home.apps.HomeConfig',
+<<<<<<< HEAD
+=======
+    'social_django',
+    'fontawesomefree',
+>>>>>>> 3b1415b5629d610e8c5b5e446ce66207e740dbf1
 ]
 
 MIDDLEWARE = [
